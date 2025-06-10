@@ -6,6 +6,7 @@ const Crypto = () => {
   const [cryptos, setCryptos] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [filtroNombre, setFiltroNombre] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,13 +30,24 @@ const Crypto = () => {
     fetchData()
   }, [])
 
+  const criptosFiltrados = cryptos.filter((crypto) =>
+    crypto.name.toLowerCase().includes(filtroNombre.toLowerCase())
+  )
+
   if (loading) return <div>Cargando...</div>
   if (error) return <div>{error}</div>
 
   return (
     <div>
-      <h1 className='crypto-title'>Top 10 Criptomonedas</h1>
-      <table className='table'>
+      <h1 className="crypto-title">Top 10 Criptomonedas</h1>
+      <input
+        type="text"
+        placeholder="Filtrar por nombre"
+        value={filtroNombre}
+        onChange={(e) => setFiltroNombre(e.target.value)}
+        className="form-control mb-3"
+      />
+      <table className="table">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -44,7 +56,7 @@ const Crypto = () => {
           </tr>
         </thead>
         <tbody>
-          {cryptos.map((crypto) => (
+          {criptosFiltrados.map((crypto) => (
             <tr key={crypto.id}>
               <td>{crypto.name}</td>
               <td>{crypto.symbol}</td>
