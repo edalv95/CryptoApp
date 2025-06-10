@@ -1,14 +1,19 @@
-import React from 'react';
-import Crypto from './components/Crypto';
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Crypto from './components/Crypto'
+import Navbar from './components/Navbar'
 
-const App   = () => {
-    return (
-        <div classname='app'>
-            <h1>CryptoApp</h1>
-            <Crypto/>
-
-        </div>
-    )
+const App = () => {
+  return (
+    <Router>
+      <Navbar />
+      <div className="container mt-4">
+        <Routes>
+          <Route path="/topcriptomonedas" element={<Crypto />} />
+        </Routes>
+      </div>
+    </Router>
+  )
 }
-export default App;
 
+export default App
