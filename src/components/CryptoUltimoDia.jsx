@@ -3,7 +3,7 @@ import axios from 'axios'
 import './Crypto.css'
 import { Link } from 'react-router-dom'
 
-const Crypto = () => {
+const CryptoUltimoDia = () => {
   const [cryptos, setCryptos] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -19,6 +19,7 @@ const Crypto = () => {
             per_page: 10,
             page: 1,
             sparkline: false,
+            price_change_percentage: '24h',
           },
         })
         setCryptos(response.data)
@@ -31,11 +32,11 @@ const Crypto = () => {
     fetchData()
   }, [])
 
-  const criptosFiltradas = cryptos.filter((crypto) =>
+  const criptosFiltrados = cryptos.filter((crypto) =>
     crypto.name.toLowerCase().includes(filtroNombre.toLowerCase())
   )
 
-  const criptosOrdenadas = [...criptosFiltradas].sort(
+  const criptosOrdenadas = [...criptosFiltrados].sort(
     (a, b) => b.current_price - a.current_price
   )
 
@@ -43,7 +44,7 @@ const Crypto = () => {
     <div className="container py-4">
       <div className="card shadow">
         <div className="card-body">
-          <h2 className="card-title text-center mb-4">📈 Top 10 Criptomonedas</h2>
+          <h2 className="card-title text-center mb-4">📊 Cambio de Valor en las Últimas 24 Horas</h2>
 
           {loading && (
             <div className="text-center my-4">
@@ -76,23 +77,30 @@ const Crypto = () => {
                       <th>Nombre</th>
                       <th>Símbolo</th>
                       <th>Precio (USD)</th>
+                      <th>Cambio 24h (%)</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {criptosOrdenadas.map((crypto) => (
-                      <tr key={crypto.id}>
-                        <td>
-                          <Link
-                            to={`/detalle/${crypto.id}`}
-                            className="text-decoration-none"
-                          >
-                            {crypto.name}
-                          </Link>
-                        </td>
-                        <td>{crypto.symbol.toUpperCase()}</td>
-                        <td>${crypto.current_price.toLocaleString()}</td>
-                      </tr>
-                    ))}
+                    {criptosOrdenadas.map((crypto) => {
+                      const cambio24h = crypto.price_change_percentage_24h
+                      const claseColor = cambio24h > 0 ? 'text-success' : 'text-danger'
+                      const flecha = cambio24h > 0 ? '↑' : '↓'
+
+                      return (
+                        <tr key={crypto.id}>
+                          <td>
+                            <Link to={`/detalle/${crypto.id}`} className="text-decoration-none">
+                              {crypto.name}
+                            </Link>
+                          </td>
+                          <td>{crypto.symbol.toUpperCase()}</td>
+                          <td>${crypto.current_price.toLocaleString()}</td>
+                          <td className={claseColor}>
+                            {flecha} {Math.abs(cambio24h).toFixed(2)}%
+                          </td>
+                        </tr>
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -104,4 +112,4 @@ const Crypto = () => {
   )
 }
 
-export default Crypto
+export default CryptoUltimoDia

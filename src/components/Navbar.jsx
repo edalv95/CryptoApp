@@ -17,7 +17,25 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/topcriptomonedas">Top criptomonedas</Link>
+              <Link className="nav-link" to="/topcriptomonedas">Top</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ultimas-24h">Cambio en 24h</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/buscar">Buscar Crypto</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/detalle">Detalle de Cryptos</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/grafico">Gráfico de Precios</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/volatilidad">Volatilidad</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/comparar">Comparación valor/moneda</Link>
             </li>
           </ul>
         </div>
