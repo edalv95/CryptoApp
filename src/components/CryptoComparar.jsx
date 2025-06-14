@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-
+import './Crypto.css'
 const CryptoComparar = () => {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
@@ -60,8 +60,9 @@ const CryptoComparar = () => {
           {error && <div className="alert alert-danger text-center">{error}</div>}
 
           {data && (
+            <div className="table-crypto">
             <div className="table-responsive">
-              <table className="table table-striped table-hover">
+              <table className="table table-hover">
                 <thead className="table-dark">
                   <tr>
                     <th>Criptomoneda</th>
@@ -85,6 +86,7 @@ const CryptoComparar = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
             </div>
           )}
         </div>
