@@ -1,0 +1,6 @@
+.crypto-row-up td, .crypto-row-up a {
+  color: #00e676 !important;
+}
+.crypto-row-down td, .crypto-row-down a {
+  color: #ff5252 !important;
+}

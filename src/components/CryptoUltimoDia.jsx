@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import './Crypto.css'
 import { Link } from 'react-router-dom'
-
+import './CryptoUltimoDia.css'
 const CryptoUltimoDia = () => {
   const [cryptos, setCryptos] = useState([])
   const [loading, setLoading] = useState(true)
@@ -69,7 +69,7 @@ const CryptoUltimoDia = () => {
                 onChange={(e) => setFiltroNombre(e.target.value)}
                 className="form-control mb-4"
               />
-
+              <div className="table-crypto">
               <div className="table-responsive">
                 <table className="table table-striped table-hover">
                   <thead className="table-dark">
@@ -82,12 +82,12 @@ const CryptoUltimoDia = () => {
                   </thead>
                   <tbody>
                     {criptosOrdenadas.map((crypto) => {
-                      const cambio24h = crypto.price_change_percentage_24h
-                      const claseColor = cambio24h > 0 ? 'text-success' : 'text-danger'
-                      const flecha = cambio24h > 0 ? '↑' : '↓'
+                      const cambio24h = crypto.price_change_percentage_24h;
+                      const rowClass = cambio24h > 0 ? 'crypto-row-up' : 'crypto-row-down';
+                      const flecha = cambio24h > 0 ? '↑' : '↓';
 
                       return (
-                        <tr key={crypto.id}>
+                        <tr key={crypto.id} className={rowClass}>
                           <td>
                             <Link to={`/detalle/${crypto.id}`} className="text-decoration-none">
                               {crypto.name}
@@ -95,14 +95,15 @@ const CryptoUltimoDia = () => {
                           </td>
                           <td>{crypto.symbol.toUpperCase()}</td>
                           <td>${crypto.current_price.toLocaleString()}</td>
-                          <td className={claseColor}>
+                          <td>
                             {flecha} {Math.abs(cambio24h).toFixed(2)}%
                           </td>
                         </tr>
-                      )
+                      );
                     })}
                   </tbody>
                 </table>
+              </div>
               </div>
             </>
           )}

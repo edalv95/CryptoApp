@@ -61,17 +61,29 @@ const CryptoGrafico = () => {
       {
         label: 'Precio Actual (USD)',
         data: cryptos.map(c => c.current_price),
-        backgroundColor: 'rgba(54, 162, 235, 0.7)'
+        backgroundColor: '#C87800'
       }
     ]
   }
 
-  const barOptions = {
-    responsive: true,
-    plugins: {
-      legend: { display: false }
+ const barOptions = {
+  responsive: true,
+  plugins: {
+    legend: { display: false }
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: '#c7c6c6'
+      }
+    },
+    y: {
+      ticks: {
+        color: '#c7c6c6'
+      }
     }
   }
+}
 
   const getMiniLineOptions = (crypto) => {
     const prices = crypto.sparkline_in_7d.price
@@ -94,7 +106,7 @@ const CryptoGrafico = () => {
           suggestedMax: max,
           ticks: {
             callback: (value) => `$${value}`,
-            color: '#666',
+            color: '#c7c6c6',
             font: { size: 9 },
             maxTicksLimit: 3,
             stepSize: Math.round((max - min) / 2)

@@ -1,11 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import logo from '../assets/logo.png' // Ajusta la ruta si es necesario
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg">
+      <Link className="navbar-brand" to="/">
+        <img src={logo} alt="CryptoApp Logo" style={{ height: '150px' }} />
+      </Link>
       <div className="container">
-        <Link className="navbar-brand" to="/">CryptoApp</Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -37,6 +40,7 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/comparar">Comparación valor/moneda</Link>
             </li>
+
           </ul>
         </div>
       </div>

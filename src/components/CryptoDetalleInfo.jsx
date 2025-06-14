@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js'
+import './CryptoDetalleInfo.css'
 
 // ✅ No registres chartjs-plugin-datalabels aquí
 ChartJS.register(
@@ -79,71 +80,106 @@ const CryptoDetalleInfo = () => {
     return <div className="alert alert-danger text-center mt-3">{error}</div>
   }
 
-  const chartData = {
-    labels: sparkline?.map((_, i) => i),
-    datasets: [
-      {
-        data: sparkline,
-        borderColor: 'rgba(0, 200, 200, 0.8)',
-        backgroundColor: 'rgba(0, 200, 200, 0.1)',
-        pointRadius: 2,
-        fill: true,
-        tension: 0.3
-      }
-    ]
-  }
+const horasPorDia = 24
+const diasAMostrar = 7
 
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: { enabled: false },
-      datalabels: { display: false }
-    },
-    scales: {
-      x: { display: false },
-      y: {
-        display: true,
-        ticks: {
-          callback: (value) => `$${value.toLocaleString()}`,
-          color: '#666',
-          font: { size: 10 },
-          maxTicksLimit: 3
-        },
-        grid: { color: '#eee' }
-      }
-    },
-    elements: {
-      point: { radius: 2 },
-      line: { tension: 0.2 }
+let dailyPrices = []
+let dailyLabels = []
+
+if (sparkline && sparkline.length >= horasPorDia * diasAMostrar) {
+  for (let i = 0; i < diasAMostrar; i++) {
+    dailyPrices.push(sparkline[i * horasPorDia])
+    const date = new Date(Date.now() - (diasAMostrar - 1 - i) * 24 * 60 * 60 * 1000)
+    dailyLabels.push(date.toLocaleDateString('es-ES', { weekday: 'short' }))
+  }
+}
+
+const chartData = {
+  labels: dailyLabels,
+  datasets: [
+    {
+      data: dailyPrices,
+      borderColor: 'rgba(200, 120, 0, 0.84)',
+      backgroundColor: 'rgba(236, 10, 10, 0.1)',
+      pointRadius: 2,
+      fill: true,
+      tension: 0.3
     }
+  ]
+}
+
+const chartOptions = {
+  responsive: true,
+  plugins: {
+    legend: { display: false },
+    tooltip: { enabled: false },
+    datalabels: { display: false }
+  },
+  scales: {
+    x: { 
+      display: true,
+      title: { display: true, text: 'Día' },
+      ticks: { color: '#b0b0b0' }
+    },
+    y: {
+      display: true,
+      ticks: {
+        callback: (value) => `$${value.toLocaleString()}`,
+        color: '#b0b0b0',
+        font: { size: 15 },
+        maxTicksLimit: 3
+      },
+      grid: { color: '#eee' }
+    }
+  },
+  elements: {
+    point: { radius: 2 },
+    line: { tension: 0.2 }
   }
-
-  return (
-    <div className="container py-4">
-      <div className="card shadow">
-        <div className="card-body text-center">
-          <h2 className="text-primary">{crypto.name} ({crypto.symbol.toUpperCase()})</h2>
-          <img src={crypto.image.large} alt={crypto.name} className="my-3" />
-          <p><strong>Precio actual:</strong> ${crypto.market_data.current_price.usd.toLocaleString()}</p>
-          <p><strong>Market Cap:</strong> ${crypto.market_data.market_cap.usd.toLocaleString()}</p>
-          <p><strong>Volumen 24h:</strong> ${crypto.market_data.total_volume.usd.toLocaleString()}</p>
-          <p><strong>Ranking de mercado:</strong> #{crypto.market_cap_rank}</p>
-
-          {sparkline && (
-            <div className="mt-4">
-              <h5 className="mb-3">📉 Evolución últimos 7 días</h5>
-              <div className="d-flex justify-content-center">
-                <div style={{ width: '300px' }}>
-                  <Line data={chartData} options={chartOptions} />
-                </div>
-              </div>
-            </div>
-          )}
+}
+return (
+  <div className="crypto-detalle-layout">
+    <div className="crypto-info-columns">
+      <div className="info-col">
+        <div className="crypto-header">
+          <img src={crypto.image.large} alt={crypto.name} className="crypto-logo" />
+          <h2 className="crypto-name">
+            {crypto.name} ({crypto.symbol.toUpperCase()})
+          </h2>
+        </div>
+        <div className="info-box">
+          <strong>Ranking de mercado:</strong> #{crypto.market_cap_rank}
         </div>
       </div>
+      <div className="info-col">
+      <div className="info-box">
+        <div className="info-title">Precio actual:</div>
+        <div className="info-data">${crypto.market_data.current_price.usd.toLocaleString()}</div>
+      </div>
+      <div className="info-box">
+        <div className="info-title">Market Cap:</div>
+        <div className="info-data">${crypto.market_data.market_cap.usd.toLocaleString()}</div>
+      </div>
+      <div className="info-box">
+        <div className="info-title">Volumen 24h:</div>
+        <div className="info-data">${crypto.market_data.total_volume.usd.toLocaleString()}</div>
+      </div>
+      </div>
     </div>
-  )
+    <div className="crypto-graph-center">
+      {sparkline && (
+        <div className="graph-box">
+          <h5 className="mb-3 text-center">Evolución en los últimos 7 días</h5>
+        <div className="graph-inner" style={{ width: '800px', height: '500px' }}>
+          <Line data={chartData} options={chartOptions} width={700} height={400} />
+        </div>
+        </div>
+      )}
+    </div>
+  </div>
+)
 }
+
+
 
 export default CryptoDetalleInfo

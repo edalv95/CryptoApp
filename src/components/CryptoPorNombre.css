@@ -1,0 +1,51 @@
+
+.card-searchbar{
+    width: 100%;
+    background-color: black;
+    color : rgb(218, 204, 204);
+    border: none;
+}
+
+.card.shadow {
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.3) !important;
+  border-color: black;
+}
+
+.form-control {
+    color : #c7c6c6 !important;
+    border-color: #c7c6c6 !important;
+    background-color: #110f0f !important;
+}
+
+.form-control::placeholder{
+
+    color: #c7c6c6 !important;
+    border-color: #fd0101 !important;
+}
+
+.btn-primary {
+
+    background-color: #C87800 !important;
+    border-color: #C87800 !important;
+    color: #000000 !important;
+}
+
+.result-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    border-radius : 8px;
+    background-color: #232323 !important;
+    border-color: #C87800 !important;
+    color: #c7c6c6 !important;
+}
+
+.crypto-link {
+    color: #C87800 !important;
+    
+}
+
+.crypto-link:hover {
+    color: #ffb300 !important;
+}

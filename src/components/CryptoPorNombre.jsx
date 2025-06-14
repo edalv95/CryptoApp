@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import React, { useState } from 'react'
 import axios from 'axios'
 import './Crypto.css'
@@ -20,6 +21,7 @@ ChartJS.register(
   Tooltip,
   Legend
 )
+import './CryptoPorNombre.css'
 
 const CryptoPorNombre = () => {
   const [input, setInput] = useState('')
@@ -124,7 +126,7 @@ const CryptoPorNombre = () => {
   return (
     <div className="container py-4">
       <div className="card shadow">
-        <div className="card-body">
+        <div className="card-searchbar">
           <h2 className="card-title text-center mb-4">🔍 Buscar Criptomoneda por Nombre</h2>
 
           <div className="input-group mb-3">
@@ -134,8 +136,10 @@ const CryptoPorNombre = () => {
               placeholder="Ej: bitcoin, btc, ethereum"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={buscarCripto}
             />
-            <button className="btn btn-primary" onClick={buscarCripto}>
+            <i class="icon-search-new UniversalField_searchIcon__FU8To"></i>
+            <button className="btn btn-primary" onClick={buscarCripto} onKeyDown={buscarCripto}>
               Buscar
             </button>
           </div>
@@ -155,25 +159,19 @@ const CryptoPorNombre = () => {
           )}
 
           {crypto && (
-            <div className="text-center mt-4">
-              <h2 className="text-primary">{crypto.name} ({crypto.symbol.toUpperCase()})</h2>
+          <div className="result-body">
+          <div className="text-center mt-4">
+            <h2 className="text-primary">
+              <Link to={`/detalle/${crypto.id}`} className="crypto-link">
+                {crypto.name} ({crypto.symbol.toUpperCase()})
+              </Link>
+            </h2>
+            <Link to={`/detalle/${crypto.id}`} className="crypto-link">
               <img src={crypto.image.large} alt={crypto.name} className="my-3" />
-              <p><strong>Precio actual:</strong> ${crypto.market_data.current_price.usd.toLocaleString()}</p>
-              <p><strong>Market Cap:</strong> ${crypto.market_data.market_cap.usd.toLocaleString()}</p>
-              <p><strong>Volumen 24h:</strong> ${crypto.market_data.total_volume.usd.toLocaleString()}</p>
-              <p><strong>Ranking de mercado:</strong> #{crypto.market_cap_rank}</p>
-
-              {sparkline && (
-                <div className="mt-4">
-                  <h5 className="mb-3">📉 Evolución últimos 7 días</h5>
-                  <div className="d-flex justify-content-center">
-                    <div style={{ width: '300px' }}>
-                      <Line data={chartData} options={chartOptions} />
-                    </div>
-                  </div>
-                </div>
-              )}
+            </Link>
+            <p><strong>Precio actual:</strong> ${crypto.market_data.current_price.usd.toLocaleString()}</p>
             </div>
+          </div>
           )}
         </div>
       </div>
