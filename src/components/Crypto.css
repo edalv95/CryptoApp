@@ -1,0 +1,31 @@
+
+
+.card {
+  background-color: #232323 !important;
+  border-radius: 16px !important;
+  border: none !important;
+}
+
+.card-body {
+    background-color: #232323 !important;
+    color: #c7c6c6 !important;
+    border-radius: 8px;
+    border-color: black !important;
+}
+
+.table-crypto table,
+.table-crypto th,
+.table-crypto td {
+  background-color: #232323 !important;
+  color: #f1f1f1 !important;
+}
+
+a.text-decoration-none {
+  color: #C87800 !important;
+  text-decoration: underline !important;
+}
+
+.table-crypto table-dark{
+    background-color: #000000 !important;
+    color: #f1f1f1 !important;
+}

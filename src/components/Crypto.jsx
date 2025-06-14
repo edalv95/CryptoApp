@@ -68,9 +68,9 @@ const Crypto = () => {
                 onChange={(e) => setFiltroNombre(e.target.value)}
                 className="form-control mb-4"
               />
-
+              <div className="table-crypto">
               <div className="table-responsive">
-                <table className="table table-striped table-hover">
+                <table className="table table-hover">
                   <thead className="table-dark">
                     <tr>
                       <th>Nombre</th>
@@ -95,6 +95,7 @@ const Crypto = () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
               </div>
             </>
           )}
