@@ -11,7 +11,7 @@ import CryptoVolatilidad from './components/CryptoVolatilidad'
 import CryptoComparar from './components/CryptoComparar'
 import CryptoYNombre from './components/CryptoPag1'
 import './index.css'
-import logo from './assets/Mainlogo.png'
+import logo from './assets/MainLogo.png'
 
 const App = () => {
   return (
